@@ -40,6 +40,7 @@ module.exports = function (grunt) {
     watch: {
       options: {
         interrupt: true,
+        atBegin: true
       },
       files: ['src/**/*.js'],
       tasks: ['default'],
@@ -82,21 +83,13 @@ module.exports = function (grunt) {
           }
         }],
       },
-      version:
+      static:
       {
         files: [{
           expand: true,
-          cwd: 'src/',
-          src: 'version.js',
-          dest: 'dist/'
-        }]
-      },
-      main:
-      {
-        files: [{
-          expand: true,
-          cwd: 'src/',
-          src: 'main.js',
+          cwd: 'static/',
+          src: '**',
+          filter: 'isFile',
           dest: 'dist/'
         }]
       }
@@ -160,7 +153,7 @@ module.exports = function (grunt) {
 
   // Combine the above into a default task
   // grunt.registerTask('default',  ['clean', 'copy:screeps',  'file_append:versioning', 'screeps']);
-  grunt.registerTask('default',  ['copy:version', 'copy:main', 'webpack', 'file_append:versioning', 'screeps']);
+  grunt.registerTask('default',  ['clean', 'copy:static', 'webpack', 'file_append:versioning', 'screeps']);
   grunt.registerTask('private',  ['clean', 'copy:screeps',  'file_append:versioning', 'rsync:private']);
   grunt.registerTask('test',     ['jsbeautifier:verify']);
   grunt.registerTask('pretty',   ['jsbeautifier:modify']);
